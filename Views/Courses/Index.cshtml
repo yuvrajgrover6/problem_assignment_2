@@ -1,0 +1,34 @@
+@model List<Course>
+
+<h2>All Courses</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Create New Course</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Instructor</th>
+            <th>Start Date</th>
+            <th>Room</th>
+            <th>No of Students</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+                <tr>
+                    <td>@course.Name</td>
+                    <td>@course.Instructor</td>
+                    <td>@course.StartDate.ToShortDateString()</td>
+                    <td>@course.RoomNumber</td>
+                    <td>@course.Students.Count()</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@course.Id" class="btn btn-info btn-sm">Details</a>
+                        <a asp-action="Edit" asp-route-id="@course.Id" class="btn btn-warning btn-sm">Edit</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

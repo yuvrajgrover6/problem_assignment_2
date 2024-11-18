@@ -1,0 +1,31 @@
+@model problem_assignment_2.Models.Course
+
+<h2>Create New Course</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>    <br/>
+
+    <div class="form-group">
+        <label asp-for="Instructor"></label>
+        <input asp-for="Instructor" class="form-control" />
+        <span asp-validation-for="Instructor" class="text-danger"></span>
+    </div>    <br/>
+
+    <div class="form-group">
+        <label asp-for="StartDate"></label>
+        <input asp-for="StartDate" type="date" class="form-control" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>    <br/>
+
+    <div class="form-group">
+        <label asp-for="RoomNumber"></label>
+        <input asp-for="RoomNumber" class="form-control" />
+        <span asp-validation-for="RoomNumber" class="text-danger"></span>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

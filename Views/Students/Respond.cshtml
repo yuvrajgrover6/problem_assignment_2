@@ -1,0 +1,23 @@
+@model problem_assignment_2.Models.Student
+
+<h2>Enrollment Confirmation</h2>
+
+<p>Dear @Model.Name,</p>
+<p>You are invited to enroll in the course: @Model.Course.Name</p>
+<p>Please confirm your enrollment:</p>
+
+<form asp-action="Respond" asp-route-id="@Model.Id" method="post"> <!-- Pass student ID -->
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="confirm" id="confirmYes" value="true" required>
+        <label class="form-check-label" for="confirmYes">
+            Yes, I confirm my enrollment
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="confirm" id="confirmNo" value="false" required>
+        <label class="form-check-label" for="confirmNo">
+            No, I decline the enrollment
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Submit Response</button>
+</form>

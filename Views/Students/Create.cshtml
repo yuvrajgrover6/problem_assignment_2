@@ -1,0 +1,20 @@
+@model problem_assignment_2.ViewModels.StudentViewModel;
+
+<h2>Add Student to Course</h2>
+
+<form asp-action="Create" method="post">
+    <input type="hidden" asp-for="CourseId" />
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>    <br/>
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>    <br/>
+
+    <button type="submit" class="btn btn-primary">Add Student</button>
+</form>

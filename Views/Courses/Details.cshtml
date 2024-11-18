@@ -1,0 +1,56 @@
+@model problem_assignment_2.Models.Course;
+@{
+    var emailStatus = TempData["EmailStatus"] as string;
+    var numEmailsSent = TempData["NumEmailsSent"] as int?;
+}
+<h2>@Model.Name</h2>
+<p>Instructor: @Model.Instructor</p>
+<p>Start Date: @Model.StartDate.ToShortDateString()</p>
+<p>Room: @Model.RoomNumber</p>
+
+<h3>Students</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.Students)
+        {
+            <tr>
+                <td>@student.Name</td>
+                <td>@student.Email</td>
+                <td>@student.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" asp-controller="Students" asp-route-courseId="@Model.Id" class="btn btn-primary">Add Student</a>
+    <br />
+    <br />
+<form asp-action="SendConfirmations" asp-controller="Courses" method="post">
+    @Html.AntiForgeryToken() <!-- Anti-forgery token for CSRF protection -->
+    <input type="hidden" name="id" value="@Model.Id" /> <!-- Hidden field for course ID -->
+    <button type="submit" class="btn btn-success">Send Confirmation Emails</button>
+    <br />
+    <br />
+    @if (!string.IsNullOrEmpty(emailStatus))
+{
+    @if (numEmailsSent.HasValue && numEmailsSent.Value > 0)
+    {
+        <div class="alert alert-success">
+        @emailStatus
+    </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+        @emailStatus
+    </div>
+    }
+}
+</form>
