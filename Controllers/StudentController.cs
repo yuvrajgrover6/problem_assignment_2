@@ -26,24 +26,35 @@ public class StudentsController : Controller
         return View(new StudentViewModel { CourseId = courseId });
     }
 
-    [HttpPost("create/{courseId}")]
-    public IActionResult Create(int courseId, StudentViewModel model)
+[HttpPost("create/{courseId}")]
+public IActionResult Create(int courseId, StudentViewModel model)
+{
+    if (ModelState.IsValid)
     {
-        if (ModelState.IsValid)
+        // Check if a student with the same email already exists
+        var existingStudent = _context.Students.FirstOrDefault(s => s.Email == model.Email);
+        if (existingStudent != null)
         {
-            var student = new Student
-            {
-                Name = model.Name,
-                Email = model.Email,
-                Status = EnrollmentStatus.ConfirmationMessageNotSent,
-                CourseId = courseId
-            };
-            _context.Students.Add(student);
-            _context.SaveChanges();
-            return RedirectToAction("Details", "Courses", new { id = courseId });
+            ModelState.AddModelError("Email", "A student with this email address already exists.");
+            return View(model); // Return to the view with the validation error
         }
-        return View(model);
+
+        var student = new Student
+        {
+            Name = model.Name,
+            Email = model.Email,
+            Status = EnrollmentStatus.ConfirmationMessageNotSent,
+            CourseId = courseId
+        };
+        
+        _context.Students.Add(student);
+        _context.SaveChanges();
+        
+        return RedirectToAction("Details", "Courses", new { id = courseId });
     }
+    
+    return View(model);
+}
 
     [HttpGet("respond/{id}")]
     public IActionResult Respond(int id)
